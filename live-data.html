@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>POLAR — Live Data Center</title>
+<style>
+body{margin:0;background:#050912;color:#e2e8f0;font-family:Inter,Segoe UI,Arial,sans-serif}a{color:#7dd3fc}
+.wrap{max-width:1400px;margin:auto;padding:28px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}.eyebrow{font:11px monospace;letter-spacing:.18em;color:#64748b;text-transform:uppercase}.title{font-size:32px;font-weight:800;margin:8px 0}.sub{color:#94a3b8}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:20px 0}.card{background:#080f1c;border:1px solid #1e293b;border-radius:14px;padding:18px}.num{font-size:25px;font-weight:800;margin-top:8px}.label{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.1em}.green{color:#6ee7b7}.sky{color:#7dd3fc}.amber{color:#fcd34d}.rose{color:#fda4af}.table{width:100%;border-collapse:collapse}.table th,.table td{text-align:left;padding:11px;border-bottom:1px solid #1e293b;font-size:13px}.table th{font:10px monospace;color:#64748b;text-transform:uppercase}.scroll{overflow:auto}.btn{background:#0ea5e9;color:#00111c;border:0;padding:9px 13px;border-radius:8px;font-weight:700;cursor:pointer}.note{font-size:11px;color:#64748b;margin-top:12px}.news{display:block;padding:13px;border:1px solid #1e293b;border-radius:10px;margin:8px 0;text-decoration:none}.news:hover{border-color:#0ea5e9}.news b{display:block;color:#f1f5f9;margin:4px 0}.news span{font-size:11px;color:#64748b}.status{font:11px monospace;color:#6ee7b7}.cargo-status{display:inline-flex;align-items:center;min-width:78px;justify-content:center;padding:4px 8px;border:1px solid #334155;border-radius:999px;background:#0b1728;color:#bae6fd;font:10px monospace;font-weight:700;letter-spacing:.08em;white-space:nowrap}.cargo-status[data-state="IN_TRANSIT"]{border-color:#0ea5e966;background:#08243a;color:#7dd3fc}.cargo-status[data-state="DELIVERED"]{border-color:#34d39966;background:#08261f;color:#6ee7b7}.cargo-status[data-state="AT_STATION"]{border-color:#a78bfa66;background:#17132c;color:#c4b5fd}.coords{font:12px monospace}
+</style></head><body>
+<div class="wrap">
+<div class="top"><div><div class="eyebrow">POLARIS / Live Operations</div><div class="title">Live Data Center</div><div class="sub">Weather · GPS · Cargo · Personnel · Expedition Planning · Research Updates</div></div><div><span id="status" class="status">SYNCING…</span> <button class="btn" onclick="loadAll()">Refresh</button></div></div>
+<div class="grid" id="kpis"></div>
+<div class="card"><div class="label">Live Weather</div><h2 id="weatherTitle">—</h2><div class="grid" id="weather"></div></div>
+<br>
+<div class="card"><div class="label">Cargo GPS Tracking</div><div class="scroll"><table class="table"><thead><tr><th>Cargo</th><th>Status</th><th>Route</th><th>Coordinates</th><th>Source</th></tr></thead><tbody id="cargo"></tbody></table></div><div class="note">Real GPS devices can POST telemetry to <b>/api/live/gps</b>. Simulated positions are explicitly labeled and are not satellite GPS.</div></div>
+<br>
+<div class="card"><div class="label">Personnel Movement / Location</div><div class="scroll"><table class="table"><thead><tr><th>Personnel</th><th>Role</th><th>Location</th><th>Coordinates</th><th>Source</th></tr></thead><tbody id="people"></tbody></table></div></div>
+<br>
+<div class="card"><div class="label">Live Research Updates</div><div id="research">Loading…</div><div class="note">Source: U.S. National Science Foundation news RSS, filtered for polar/research terms.</div></div>
+<br>
+<div class="card"><div class="label">Expedition Live Planning</div><div id="planning">Loading expeditions…</div></div>
+</div>
+<script>
+const j=async u=>{const r=await fetch(u);const x=await r.json();if(!r.ok)throw Error(x.error||'Request failed');return x};
+const esc=x=>String(x??'—').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+async function loadAll(){
+ document.getElementById('status').textContent='SYNCING…';
+ try{
+  const [o,c,p,r,e]=await Promise.all([j('/api/live/operations'),j('/api/live/cargo-tracking'),j('/api/live/personnel-tracking'),j('/api/live/research-updates'),j('/api/expeditions')]);
+  const d=o; const w=d.weather?.current||{};
+  document.getElementById('kpis').innerHTML=[
+   ['Active expeditions',d.expeditions?.active,'sky'],['Cargo tracked',c.tracking?.length,'sky'],['Personnel tracked',p.tracking?.length,'green'],['Inventory shortages',d.inventory?.shortages,'amber'],['Open emergencies',d.emergencies?.open,'rose']
+  ].map(x=>`<div class="card"><div class="label">${x[0]}</div><div class="num ${x[2]}">${esc(x[1])}</div></div>`).join('');
+  document.getElementById('weatherTitle').textContent=esc(d.weather?.location_name||'Research station');
+  document.getElementById('weather').innerHTML=[
+   ['Temperature',(w.temperature_2m??'—')+' °C'],['Wind',(w.wind_speed_10m??'—')+' km/h'],['Visibility',w.visibility!=null?(w.visibility/1000).toFixed(1)+' km':'—'],['Precipitation',(w.precipitation??'—')+' mm']
+  ].map(x=>`<div class="card"><div class="label">${x[0]}</div><div class="num">${esc(x[1])}</div></div>`).join('');
+  document.getElementById('cargo').innerHTML=(c.tracking||[]).map(x=>`<tr><td>${esc(x.cargo_code)}</td><td><span class="cargo-status" data-state="${esc(x.shipment_status)}">${esc(String(x.shipment_status||'UNKNOWN').replace(/_/g,' '))}</span></td><td>${esc(x.from_location)} → ${esc(x.destination)}</td><td class="coords">${x.latitude!=null?Number(x.latitude).toFixed(4)+', '+Number(x.longitude).toFixed(4):'—'}</td><td>${x.simulation?'SIMULATED DEMO GPS':esc(x.tracking_source)}</td></tr>`).join('');
+  document.getElementById('people').innerHTML=(p.tracking||[]).map(x=>`<tr><td>${esc(x.personnel_code)} — ${esc(x.name)}</td><td>${esc(x.role)}</td><td>${esc(x.location)}</td><td class="coords">${x.latitude!=null?Number(x.latitude).toFixed(4)+', '+Number(x.longitude).toFixed(4):'—'}</td><td>${esc(x.tracking_source)}</td></tr>`).join('');
+  document.getElementById('research').innerHTML=(r.items||[]).map(x=>`<a class="news" href="${esc(x.url)}" target="_blank" rel="noreferrer"><span>${esc(x.source)} · ${esc(x.published_at)}</span><b>${esc(x.title)}</b><span>${esc((x.summary||'').replace(/<[^>]*>/g,'').slice(0,280))}</span></a>`).join('')||'No polar-relevant updates returned.';
+  document.getElementById('planning').innerHTML=(e.data||[]).map(x=>`<div style="padding:12px;border-bottom:1px solid #1e293b"><b>${esc(x.expedition_code)} — ${esc(x.name)}</b><br><span class="note">Use the expedition API endpoint <b>/api/expeditions/${x.id}/live-planning</b> for live readiness, weather, inventory, cargo and personnel checks.</span></div>`).join('');
+  document.getElementById('status').textContent='LIVE · AUTO REFRESH 15s';
+ }catch(err){document.getElementById('status').textContent='LIVE FEED ERROR';console.error(err)}
+}
+loadAll();setInterval(loadAll,15000);
+</script></body></html>

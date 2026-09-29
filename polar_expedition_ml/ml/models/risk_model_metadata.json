@@ -1,0 +1,284 @@
+{
+  "trained_at_utc": "2026-09-18T06:08:28.295456+00:00",
+  "dataset_type": "SYNTHETIC_DEMO",
+  "dataset_disclaimer": "Trained and evaluated on a synthetic, algorithmically generated demo dataset (generate_dataset.py). NOT real expedition data. Metrics below demonstrate that the pipeline works correctly, not real-world operational performance. Do not use for real polar operations without validation against real historical data.",
+  "random_seed": 42,
+  "feature_columns": [
+    "expedition_duration_days",
+    "personnel_count",
+    "cargo_weight_kg",
+    "medical_supply_level",
+    "food_supply_level",
+    "fuel_supply_level",
+    "equipment_availability",
+    "temperature",
+    "wind_speed",
+    "visibility",
+    "distance_from_base_km",
+    "communication_status",
+    "vehicle_status",
+    "emergency_history",
+    "inventory_shortage_count",
+    "personnel_movement_deviation",
+    "previous_incidents",
+    "weather_risk_score"
+  ],
+  "class_order": [
+    "LOW",
+    "MEDIUM",
+    "HIGH"
+  ],
+  "chosen_model": "logistic_regression",
+  "feature_importances": {
+    "expedition_duration_days": 0.018732641778146045,
+    "personnel_count": 0.059607702144812404,
+    "cargo_weight_kg": 0.007281292148088511,
+    "medical_supply_level": 0.19432851140512566,
+    "food_supply_level": 0.18902931013510282,
+    "fuel_supply_level": 0.13851029602950102,
+    "equipment_availability": 0.34347040917055255,
+    "temperature": 0.21039304255496905,
+    "wind_speed": 0.1504855855880284,
+    "visibility": 0.07937486712271928,
+    "distance_from_base_km": 0.3969769701984706,
+    "communication_status": 0.6319284578808789,
+    "vehicle_status": 0.2242296816799939,
+    "emergency_history": 0.29697768553484183,
+    "inventory_shortage_count": 0.10963927887124675,
+    "personnel_movement_deviation": 0.29590355179920713,
+    "previous_incidents": 0.1037715623417972,
+    "weather_risk_score": 0.29051909699106204
+  },
+  "feature_medians": {
+    "expedition_duration_days": 63.0,
+    "personnel_count": 21.0,
+    "cargo_weight_kg": 1582.9,
+    "medical_supply_level": 49.55,
+    "food_supply_level": 46.900000000000006,
+    "fuel_supply_level": 50.5,
+    "equipment_availability": 50.75,
+    "temperature": -24.3,
+    "wind_speed": 49.849999999999994,
+    "visibility": 9.675,
+    "distance_from_base_km": 526.05,
+    "communication_status": 50.1,
+    "vehicle_status": 51.05,
+    "emergency_history": 0.0,
+    "inventory_shortage_count": 1.0,
+    "personnel_movement_deviation": 10.225000000000001,
+    "previous_incidents": 0.0,
+    "weather_risk_score": 47.75
+  },
+  "feature_std": {
+    "expedition_duration_days": 33.28309159509267,
+    "personnel_count": 10.707216848123956,
+    "cargo_weight_kg": 818.6505667392602,
+    "medical_supply_level": 28.958591236833644,
+    "food_supply_level": 28.35867815335377,
+    "fuel_supply_level": 28.702189981797236,
+    "equipment_availability": 28.806848295665684,
+    "temperature": 17.355216351438163,
+    "wind_speed": 28.339025193708824,
+    "visibility": 5.633009473554016,
+    "distance_from_base_km": 284.8509870905773,
+    "communication_status": 29.683287644879805,
+    "vehicle_status": 29.23653933767988,
+    "emergency_history": 0.43604293886854106,
+    "inventory_shortage_count": 1.099545929482955,
+    "personnel_movement_deviation": 8.08366417670995,
+    "previous_incidents": 0.7854666648356079,
+    "weather_risk_score": 16.962429779163905
+  },
+  "model_comparison": {
+    "logistic_regression": {
+      "accuracy": 0.61,
+      "precision_macro": 0.6043,
+      "recall_macro": 0.61,
+      "f1_macro": 0.6062,
+      "confusion_matrix": {
+        "labels": [
+          "LOW",
+          "MEDIUM",
+          "HIGH"
+        ],
+        "matrix": [
+          [
+            69,
+            29,
+            2
+          ],
+          [
+            25,
+            40,
+            35
+          ],
+          [
+            3,
+            23,
+            74
+          ]
+        ]
+      },
+      "classification_report": {
+        "LOW": {
+          "precision": 0.711340206185567,
+          "recall": 0.69,
+          "f1-score": 0.700507614213198,
+          "support": 100.0
+        },
+        "MEDIUM": {
+          "precision": 0.43478260869565216,
+          "recall": 0.4,
+          "f1-score": 0.4166666666666667,
+          "support": 100.0
+        },
+        "HIGH": {
+          "precision": 0.6666666666666666,
+          "recall": 0.74,
+          "f1-score": 0.7014218009478673,
+          "support": 100.0
+        },
+        "accuracy": 0.61,
+        "macro avg": {
+          "precision": 0.604263160515962,
+          "recall": 0.61,
+          "f1-score": 0.6061986939425773,
+          "support": 300.0
+        },
+        "weighted avg": {
+          "precision": 0.6042631605159619,
+          "recall": 0.61,
+          "f1-score": 0.6061986939425773,
+          "support": 300.0
+        }
+      }
+    },
+    "random_forest": {
+      "accuracy": 0.5667,
+      "precision_macro": 0.5541,
+      "recall_macro": 0.5667,
+      "f1_macro": 0.5563,
+      "confusion_matrix": {
+        "labels": [
+          "LOW",
+          "MEDIUM",
+          "HIGH"
+        ],
+        "matrix": [
+          [
+            63,
+            29,
+            8
+          ],
+          [
+            26,
+            33,
+            41
+          ],
+          [
+            9,
+            17,
+            74
+          ]
+        ]
+      },
+      "classification_report": {
+        "LOW": {
+          "precision": 0.6428571428571429,
+          "recall": 0.63,
+          "f1-score": 0.6363636363636364,
+          "support": 100.0
+        },
+        "MEDIUM": {
+          "precision": 0.4177215189873418,
+          "recall": 0.33,
+          "f1-score": 0.3687150837988827,
+          "support": 100.0
+        },
+        "HIGH": {
+          "precision": 0.6016260162601627,
+          "recall": 0.74,
+          "f1-score": 0.6636771300448431,
+          "support": 100.0
+        },
+        "accuracy": 0.5666666666666667,
+        "macro avg": {
+          "precision": 0.5540682260348824,
+          "recall": 0.5666666666666667,
+          "f1-score": 0.5562519500691208,
+          "support": 300.0
+        },
+        "weighted avg": {
+          "precision": 0.5540682260348825,
+          "recall": 0.5666666666666667,
+          "f1-score": 0.5562519500691206,
+          "support": 300.0
+        }
+      }
+    },
+    "gradient_boosting": {
+      "accuracy": 0.5767,
+      "precision_macro": 0.5701,
+      "recall_macro": 0.5767,
+      "f1_macro": 0.5721,
+      "confusion_matrix": {
+        "labels": [
+          "LOW",
+          "MEDIUM",
+          "HIGH"
+        ],
+        "matrix": [
+          [
+            64,
+            30,
+            6
+          ],
+          [
+            26,
+            38,
+            36
+          ],
+          [
+            7,
+            22,
+            71
+          ]
+        ]
+      },
+      "classification_report": {
+        "LOW": {
+          "precision": 0.6597938144329897,
+          "recall": 0.64,
+          "f1-score": 0.649746192893401,
+          "support": 100.0
+        },
+        "MEDIUM": {
+          "precision": 0.4222222222222222,
+          "recall": 0.38,
+          "f1-score": 0.4,
+          "support": 100.0
+        },
+        "HIGH": {
+          "precision": 0.6283185840707964,
+          "recall": 0.71,
+          "f1-score": 0.6666666666666666,
+          "support": 100.0
+        },
+        "accuracy": 0.5766666666666667,
+        "macro avg": {
+          "precision": 0.5701115402420028,
+          "recall": 0.5766666666666667,
+          "f1-score": 0.5721376198533559,
+          "support": 300.0
+        },
+        "weighted avg": {
+          "precision": 0.5701115402420027,
+          "recall": 0.5766666666666667,
+          "f1-score": 0.5721376198533559,
+          "support": 300.0
+        }
+      }
+    }
+  },
+  "sklearn_version": "1.5.2"
+}

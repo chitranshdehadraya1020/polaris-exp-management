@@ -1,0 +1,60 @@
+/* POLARIS // Aurora Command visual system */
+:root {
+  --polar-bg: #040812;
+  --polar-panel: rgba(9, 18, 34, .78);
+  --polar-panel-strong: rgba(8, 16, 30, .94);
+  --polar-line: rgba(148, 163, 184, .13);
+  --polar-cyan: #38bdf8;
+  --polar-violet: #818cf8;
+  --polar-mint: #5eead4;
+  --polar-glow: 0 0 34px rgba(56, 189, 248, .12);
+}
+
+html { background: var(--polar-bg); }
+body {
+  background: radial-gradient(900px 520px at 92% -8%, rgba(14, 165, 233, .14), transparent 68%), radial-gradient(760px 620px at -12% 108%, rgba(79, 70, 229, .13), transparent 65%), linear-gradient(145deg, #040812 0%, #07101e 48%, #050912 100%);
+  color: #e6edf7;
+}
+.app-shell { min-height: 100vh; background-image: radial-gradient(circle at 76% -12%, rgba(14, 165, 233, .13), transparent 30rem), radial-gradient(circle at 8% 92%, rgba(99, 102, 241, .10), transparent 28rem), linear-gradient(180deg, rgba(4, 8, 18, .08), rgba(4, 8, 18, .48)); }
+.brand-mark { background: linear-gradient(135deg, #67e8f9 0%, #0ea5e9 35%, #2563eb 68%, #4f46e5 100%); box-shadow: 0 10px 34px rgba(14, 165, 233, .3), inset 0 1px 0 rgba(255,255,255,.35); }
+.app-shell aside { background: linear-gradient(180deg, rgba(8, 16, 30, .96), rgba(4, 10, 20, .92)) !important; border-right-color: rgba(125, 211, 252, .12) !important; box-shadow: 18px 0 55px rgba(0, 0, 0, .18); }
+.app-shell header { background: rgba(5, 12, 24, .72) !important; box-shadow: 0 10px 40px rgba(0,0,0,.12); }
+.nav-active { background: linear-gradient(100deg, rgba(14, 165, 233, .20), rgba(99, 102, 241, .13)) !important; box-shadow: inset 0 0 0 1px rgba(56, 189, 248, .31), 0 8px 28px rgba(14, 165, 233, .10); }
+.nav-active::before { background: linear-gradient(180deg, #67e8f9, #2563eb); box-shadow: 0 0 14px #38bdf8; }
+main .rounded-xl, main .rounded-2xl { border-color: var(--polar-line) !important; box-shadow: 0 14px 42px rgba(0, 0, 0, .12), inset 0 1px 0 rgba(255,255,255,.025); }
+main .rounded-xl:hover, main .rounded-2xl:hover { border-color: rgba(125, 211, 252, .22) !important; }
+main section.rounded-xl, main section.rounded-2xl { backdrop-filter: blur(16px); }
+.hover-lift { transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease, background .22s ease; }
+.hover-lift:hover { transform: translateY(-4px); border-color: rgba(56, 189, 248, .42) !important; box-shadow: 0 18px 48px rgba(2, 132, 199, .14), 0 0 0 1px rgba(56, 189, 248, .08); }
+.grid-lines { background-image: linear-gradient(rgba(56, 189, 248, .075) 1px, transparent 1px), linear-gradient(90deg, rgba(56, 189, 248, .075) 1px, transparent 1px), radial-gradient(circle at 70% 40%, rgba(56, 189, 248, .12), transparent 32%); background-size: 30px 30px, 30px 30px, auto; }
+button, a { transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background-color .18s ease, color .18s ease; }
+button.bg-sky-500:hover, button.bg-sky-400:hover { box-shadow: 0 8px 24px rgba(14, 165, 233, .28); transform: translateY(-1px); }
+input, textarea, select { color-scheme: dark; transition: border-color .18s ease, box-shadow .18s ease, background .18s ease; }
+input:focus, textarea:focus, select:focus { border-color: rgba(56, 189, 248, .6) !important; box-shadow: 0 0 0 3px rgba(56, 189, 248, .10), 0 0 26px rgba(56, 189, 248, .08); }
+[role="progressbar"] > div, .h-1\.5 > div, .h-2 > div { box-shadow: 0 0 12px rgba(56, 189, 248, .32); }
+[data-testid^="kpi-card-"] { min-height: 152px; background: linear-gradient(145deg, rgba(12, 26, 47, .86), rgba(7, 14, 27, .78)) !important; }
+[data-testid^="kpi-card-"] > div:first-child svg { color: #bae6fd; filter: drop-shadow(0 0 8px rgba(56, 189, 248, .35)); }
+.font-mono-tel { letter-spacing: .035em; }
+.app-shell main > div::after { content: ""; position: fixed; left: 0; right: 0; top: 0; height: 1px; pointer-events: none; background: linear-gradient(90deg, transparent, rgba(125,211,252,.20), transparent); animation: scanline 8s linear infinite; opacity: .45; }
+@keyframes scanline { from { transform: translateY(0); } to { transform: translateY(100vh); } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+@media (max-width: 640px) { main > div { padding-left: 1rem !important; padding-right: 1rem !important; } [data-testid^="kpi-card-"] { min-height: 132px; } }
+.no-scrollbar { scrollbar-width: none; } .no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Cargo tracking command center */
+.cargo-page .eyebrow { display: flex; align-items: center; gap: .45rem; font: 600 9px/1.2 "JetBrains Mono", monospace; letter-spacing: .18em; text-transform: uppercase; color: #64748b; }
+.live-dot { width: 6px; height: 6px; border-radius: 999px; background: #5eead4; box-shadow: 0 0 13px #5eead4; animation: pulse 1.7s ease-in-out infinite; }
+.tracking-hero { background: linear-gradient(135deg, rgba(10, 31, 52, .96), rgba(6, 15, 29, .98) 56%, rgba(15, 16, 39, .96)); box-shadow: 0 24px 80px rgba(14, 165, 233, .10), inset 0 1px 0 rgba(255,255,255,.04); }
+.polar-map { background: radial-gradient(circle at 51% 45%, rgba(14, 116, 144, .18), transparent 30%), linear-gradient(145deg, #071b2a, #081423 52%, #11132a); }
+.map-grid { position: absolute; inset: 0; opacity: .27; background-image: linear-gradient(rgba(125, 211, 252, .12) 1px, transparent 1px), linear-gradient(90deg, rgba(125, 211, 252, .12) 1px, transparent 1px); background-size: 42px 42px; mask-image: radial-gradient(circle at center, black 20%, transparent 86%); }
+.map-vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 32%, rgba(2, 8, 18, .46) 100%); z-index: 1; pointer-events: none; }
+.polar-map svg { z-index: 2; }
+.ice-shelf { fill: rgba(148, 163, 184, .055); stroke: rgba(125, 211, 252, .13); stroke-width: .22; }
+.route-line { fill: none; stroke: url(#routeA); stroke-width: .45; stroke-dasharray: 1.6 1.4; filter: drop-shadow(0 0 2px rgba(56, 189, 248, .55)); }
+.route-line.dim { opacity: .45; }
+.map-marker { cursor: pointer; transition: opacity .2s ease; }
+.map-marker:hover { opacity: .72; }
+.legend-dot { width: 6px; height: 6px; border-radius: 999px; box-shadow: 0 0 9px currentColor; }
+.manifest-row { transition: background .18s ease; }
+.manifest-row:hover { background: rgba(56, 189, 248, .045); }
+@media (max-width: 1024px) { .polar-map { min-height: 360px; } }
